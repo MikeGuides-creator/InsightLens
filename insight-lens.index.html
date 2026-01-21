@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EditFlow: The Podcast Agency Operating System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9fb;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header */
+        header {
+            padding: 20px 0;
+            border-bottom: 1px solid #eaeaea;
+            background: white;
+        }
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .logo span {
+            color: #7c3aed;
+        }
+        /* Hero */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+            line-height: 1.2;
+        }
+        .hero p {
+            font-size: 1.4rem;
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
+        }
+        .hero-image {
+            max-width: 900px;
+            margin: 50px auto 0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid #e2e8f0;
+        }
+        .hero-image img {
+            width: 100%;
+            display: block;
+        }
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1e293b;
+        }
+        /* Problem & Solution */
+        .problem-grid, .lens-grid, .included-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid #f1f5f9;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        .card i {
+            font-size: 2.5rem;
+            color: #2563eb;
+            margin-bottom: 20px;
+        }
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #1e293b;
+        }
+        /* Included */
+        .included-item {
+            text-align: center;
+        }
+        .included-item i {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Testimonials */
+        .testimonial {
+            font-style: italic;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            border-left: 6px solid #7c3aed;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+        .testimonial-author {
+            margin-top: 20px;
+            font-weight: 600;
+            color: #475569;
+        }
+        /* FAQ */
+        .faq-item {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .faq-question {
+            padding: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 300px;
+        }
+        /* Final CTA */
+        .final-cta {
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            padding: 80px 20px;
+            border-radius: 24px;
+        }
+        .final-cta h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .final-cta p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+        /* Footer */
+        footer {
+            padding: 50px 0 30px;
+            background: #0f172a;
+            color: #cbd5e1;
+            text-align: center;
+        }
+        .footer-links a {
+            color: #cbd5e1;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: white;
+        }
+        .copyright {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .section-title { font-size: 2rem; }
+            .final-cta h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">Mike<span>Guides</span></a>
+            <a href="#purchase" class="cta-button" style="padding: 12px 24px; font-size: 1rem;">Buy Now</a>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Stop Juggling, Start Scaling.</h1>
+            <p>The All-in-One Notion Operating System for Podcast Editors.</p>
+            <a href="#purchase" class="cta-button">Get EditFlow – $197</a>
+            <div class="hero-image">
+                <img src="your-screenshot.png" alt="EditFlow Notion Dashboard Screenshot">
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Tired of the Chaos?</h2>
+            <div class="problem-grid">
+                <div class="card">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Lost Emails & Feedback</h3>
+                    <p>Critical client notes buried in endless threads. Missed revisions and confusion.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-calendar-times"></i>
+                    <h3>Unclear Deadlines</h3>
+                    <p>Never sure what's due next. Projects slip through the cracks, hurting your reputation.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>No Time to Scale</h3>
+                    <p>Stuck in daily execution with no system to delegate or grow your business.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution -->
+    <section style="background: #f0f9ff;">
+        <div class="container">
+            <h2 class="section-title">EditFlow Brings Clarity</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.2rem; color: #475569;">
+                Built on a "lens" philosophy, EditFlow gives you focused perspectives on your business so you can make decisions quickly and confidently.
+            </p>
+            <div class="lens-grid">
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h3>Client Lens</h3>
+                    <p>Manage relationships, track preferences, and see all projects for each client in one place.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-tasks"></i>
+                    <h3>Project Lens</h3>
+                    <p>Visual workflow from "Brief Received" to "Invoiced". Know the status of every episode instantly.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-comments"></i>
+                    <h3>Communication Lens</h3>
+                    <p>Log every email, call, and decision in a searchable hub. Never lose context again.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Efficiency Lens</h3>
+                    <p>Systemize repetitive tasks with checklists and SOPs. Free up time for creative work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What's Included -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Everything You Get</h2>
+            <div class="included-grid">
+                <div class="card included-item">
+                    <i class="fas fa-table fa-3x"></i>
+                    <h3>Notion Template</h3>
+                    <p>Four relational databases ready to duplicate. Your central command dashboard.</p>
+                </div>
+                <div class="card included-item">
+                    <i class="fas fa-book fa-3x"></i>
+                    <h3>PDF Guide</h3>
+                    <p>Complete manual (Parts 1-6) teaching you how to use each lens effectively.</p>
+                </div>
+                <div class="card included-item">
+                    <i class="fas fa-sync-alt fa-3x"></i>
+                    <h3>Lifetime Updates</h3>
+                    <p>One-time payment. All future improvements to the template and guide are free.</p>
+                </div>
+                <div class="card included-item">
+                    <i class="fas fa-robot fa-3x"></i>
+                    <h3>AI Tool Early Access</h3>
+                    <p>Be first to test the AI Email Assistant designed to supercharge your communication.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section style="background: #f0f9ff;">
+        <div class="container">
+            <h2 class="section-title">What Early Users Say</h2>
+            <div class="testimonial">
+                <p>"This is exactly the system I've been trying to piece together myself for months. The 'lens' approach makes it intuitive. I cut my admin time in half within the first week."</p>
+                <div class="testimonial-author">– Independent Podcast Editor</div>
+            </div>
+            <!-- Add more testimonials as you get them -->
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Do I need to be a Notion expert?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Not at all. The template is pre-built and the guide walks you through every step. You just need to know how to click "Duplicate".
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is this a subscription?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    No. It's a one-time payment of $197. You get lifetime access and all future updates.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I use it with a team?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes. Notion allows you to share the workspace with editors or assistants, making it a perfect central hub for collaboration.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    What's your refund policy?
+                    <i class="fas fa-plus"></i>
+                </div>
+                <div class="faq-answer">
+                    We offer a 30-day money-back guarantee. If EditFlow doesn't bring clarity to your workflow, just email us for a full refund.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="purchase" class="final-cta">
+        <div class="container">
+            <h2>Transform Your Workflow Today</h2>
+            <p>Join the podcast editors who have replaced chaos with clarity. Get instant access to the complete EditFlow system.</p>
+            <a href="YOUR_LEMON_SQUEEZY_CHECKOUT_LINK" class="cta-button">Get EditFlow – $197</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="mailto:mikeguidesblog@gmail.com">Contact</a>
+                <a href="https://mikeguides.co">Website</a>
+                <a href="#purchase">Purchase</a>
+            </div>
+            <div class="copyright">
+                © 2025 MikeGuides. All rights reserved.<br>
+                This product is licensed for personal use by the purchaser.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple FAQ toggle
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentNode;
+                parent.classList.toggle('active');
+                const icon = item.querySelector('i');
+                if (parent.classList.contains('active')) {
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-minus');
+                } else {
+                    icon.classList.remove('fa-minus');
+                    icon.classList.add('fa-plus');
+                }
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
